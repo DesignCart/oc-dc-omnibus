@@ -1,0 +1,293 @@
+{{ header }}{{ column_left }}
+
+<div id="content" class="dc-page dc-omnibus-admin">
+  {% include 'extension/module/dc_omnibus/form_hero.twig' %}
+
+  <div class="dc-page__wrap">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}<button type="button" class="close" data-dismiss="alert">&times;</button></div>
+    {% endif %}
+
+    <div class="dc-form-card">
+      <div class="dc-interface" id="dcOmnibusInterface">
+        <form action="{{ action }}" method="post" id="form-dc-omnibus" class="dc-form dc-form--full" novalidate>
+          <nav class="dc-nav dc-tabs" role="tablist">
+            <button type="button" class="dc-nav__btn dc-tabs__btn{% if not history_product_id %} dc-active{% endif %}" data-dc-tab="tab-general" role="tab"><i class="fa fa-cog"></i> {{ tab_general }}</button>
+            <button type="button" class="dc-nav__btn dc-tabs__btn" data-dc-tab="tab-appearance" role="tab"><i class="fa fa-paint-brush"></i> {{ tab_appearance }}</button>
+            <button type="button" class="dc-nav__btn dc-tabs__btn" data-dc-tab="tab-frontend" role="tab"><i class="fa fa-desktop"></i> {{ tab_frontend }}</button>
+            <button type="button" class="dc-nav__btn dc-tabs__btn" data-dc-tab="tab-languages" role="tab"><i class="fa fa-language"></i> {{ tab_languages }}</button>
+            <button type="button" class="dc-nav__btn dc-tabs__btn" data-dc-tab="tab-files" role="tab"><i class="fa fa-file-text-o"></i> {{ tab_files }}</button>
+            <button type="button" class="dc-nav__btn dc-tabs__btn{% if history_product_id %} dc-active{% endif %}" data-dc-tab="tab-history" role="tab"><i class="fa fa-history"></i> {{ tab_history }}</button>
+          </nav>
+
+          <div class="dc-form-card__body">
+            <div id="tab-general" class="dc-tab-panel{% if not history_product_id %} dc-active{% endif %}" role="tabpanel">
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-cog"></i></span>
+                  <div>
+                    <h3 class="dc-section-card__title">{{ text_section_general }}</h3>
+                  </div>
+                </div>
+                <div class="dc-row dc-row--2">
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_status">{{ entry_status }}</label>
+                    <select class="dc-input" name="module_dc_omnibus_status" id="module_dc_omnibus_status">
+                      <option value="1"{% if module_dc_omnibus_status %} selected="selected"{% endif %}>{{ text_enabled }}</option>
+                      <option value="0"{% if not module_dc_omnibus_status %} selected="selected"{% endif %}>{{ text_disabled }}</option>
+                    </select>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_name">{{ entry_name }}</label>
+                    <input class="dc-input" type="text" name="module_dc_omnibus_name" id="module_dc_omnibus_name" value="{{ module_dc_omnibus_name }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-appearance" class="dc-tab-panel" role="tabpanel">
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-square"></i></span>
+                  <div>
+                    <h3 class="dc-section-card__title">{{ text_section_appearance }}</h3>
+                  </div>
+                </div>
+                <div class="dc-row dc-row--2">
+                  <div class="dc-field">
+                    <label class="dc-label">{{ entry_panel_bg }}</label>
+                    <div class="dc-colorpicker" data-dc-colorpicker data-name="module_dc_omnibus_panel_bg" data-value="{{ module_dc_omnibus_panel_bg }}" data-label="{{ entry_panel_bg }}"></div>
+                  </div>
+                </div>
+                <div class="dc-omnibus-preview" id="dcOmnibusPreview">
+                  <span class="dc-omnibus-preview__label">{{ module_dc_omnibus_label[languages[0].language_id]|default('Najniższa cena z 30 dni') }}</span>
+                  <span class="dc-omnibus-preview__price">99,00 zł</span>
+                </div>
+              </div>
+
+              {% set typo_settings = {
+                'module_dc_omnibus_label_size': module_dc_omnibus_label_size,
+                'module_dc_omnibus_label_color': module_dc_omnibus_label_color,
+                'module_dc_omnibus_label_uppercase': module_dc_omnibus_label_uppercase,
+                'module_dc_omnibus_label_bold': module_dc_omnibus_label_bold,
+                'module_dc_omnibus_price_size': module_dc_omnibus_price_size,
+                'module_dc_omnibus_price_color': module_dc_omnibus_price_color,
+                'module_dc_omnibus_price_uppercase': module_dc_omnibus_price_uppercase,
+                'module_dc_omnibus_price_bold': module_dc_omnibus_price_bold
+              } %}
+
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-font"></i></span>
+                  <div><h3 class="dc-section-card__title">{{ entry_label_text }}</h3></div>
+                </div>
+                <div class="dc-row dc-row--2">
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_label_size">{{ entry_label_size }}</label>
+                    <input class="dc-input dc-omnibus-typo" data-target="label" data-prop="size" type="number" min="10" max="48" name="module_dc_omnibus_label_size" id="module_dc_omnibus_label_size" value="{{ module_dc_omnibus_label_size }}" />
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-label">{{ entry_label_color }}</label>
+                    <div class="dc-colorpicker dc-omnibus-typo-picker" data-dc-colorpicker data-name="module_dc_omnibus_label_color" data-value="{{ module_dc_omnibus_label_color }}" data-label="{{ entry_label_color }}" data-target="label" data-prop="color"></div>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-check dc-check--inline">
+                      <input class="dc-check__input dc-omnibus-typo" data-target="label" data-prop="uppercase" type="checkbox" name="module_dc_omnibus_label_uppercase" value="1"{% if module_dc_omnibus_label_uppercase %} checked="checked"{% endif %} />
+                      <span class="dc-check__box"></span><span class="dc-check__text">{{ entry_label_uppercase }}</span>
+                    </label>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-check dc-check--inline">
+                      <input class="dc-check__input dc-omnibus-typo" data-target="label" data-prop="bold" type="checkbox" name="module_dc_omnibus_label_bold" value="1"{% if module_dc_omnibus_label_bold %} checked="checked"{% endif %} />
+                      <span class="dc-check__box"></span><span class="dc-check__text">{{ entry_label_bold }}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-money"></i></span>
+                  <div><h3 class="dc-section-card__title">{{ entry_price_color }}</h3></div>
+                </div>
+                <div class="dc-row dc-row--2">
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_price_size">{{ entry_price_size }}</label>
+                    <input class="dc-input dc-omnibus-typo" data-target="price" data-prop="size" type="number" min="10" max="48" name="module_dc_omnibus_price_size" id="module_dc_omnibus_price_size" value="{{ module_dc_omnibus_price_size }}" />
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-label">{{ entry_price_color }}</label>
+                    <div class="dc-colorpicker dc-omnibus-typo-picker" data-dc-colorpicker data-name="module_dc_omnibus_price_color" data-value="{{ module_dc_omnibus_price_color }}" data-label="{{ entry_price_color }}" data-target="price" data-prop="color"></div>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-check dc-check--inline">
+                      <input class="dc-check__input dc-omnibus-typo" data-target="price" data-prop="uppercase" type="checkbox" name="module_dc_omnibus_price_uppercase" value="1"{% if module_dc_omnibus_price_uppercase %} checked="checked"{% endif %} />
+                      <span class="dc-check__box"></span><span class="dc-check__text">{{ entry_price_uppercase }}</span>
+                    </label>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-check dc-check--inline">
+                      <input class="dc-check__input dc-omnibus-typo" data-target="price" data-prop="bold" type="checkbox" name="module_dc_omnibus_price_bold" value="1"{% if module_dc_omnibus_price_bold %} checked="checked"{% endif %} />
+                      <span class="dc-check__box"></span><span class="dc-check__text">{{ entry_price_bold }}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-frontend" class="dc-tab-panel" role="tabpanel">
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-desktop"></i></span>
+                  <div>
+                    <h3 class="dc-section-card__title">{{ text_section_frontend }}</h3>
+                  </div>
+                </div>
+                <div class="dc-row dc-row--2">
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_special_selector">{{ entry_special_selector }}</label>
+                    <input class="dc-input" type="text" name="module_dc_omnibus_special_selector" id="module_dc_omnibus_special_selector" value="{{ module_dc_omnibus_special_selector }}" placeholder=".product-price-special" />
+                    <p class="dc-hint">{{ help_special_selector }}</p>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_display_mode">{{ entry_display_mode }}</label>
+                    <select class="dc-input" name="module_dc_omnibus_display_mode" id="module_dc_omnibus_display_mode">
+                      <option value="always"{% if module_dc_omnibus_display_mode == 'always' %} selected="selected"{% endif %}>{{ text_display_always }}</option>
+                      <option value="promotion_only"{% if module_dc_omnibus_display_mode == 'promotion_only' %} selected="selected"{% endif %}>{{ text_display_promotion }}</option>
+                    </select>
+                    <p class="dc-hint">{{ help_display_mode }}</p>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_insert_selector">{{ entry_insert_selector }}</label>
+                    <input class="dc-input" type="text" name="module_dc_omnibus_insert_selector" id="module_dc_omnibus_insert_selector" value="{{ module_dc_omnibus_insert_selector }}" placeholder=".product-rating" />
+                    <p class="dc-hint">{{ help_insert_selector }}</p>
+                  </div>
+                  <div class="dc-field">
+                    <label class="dc-label" for="module_dc_omnibus_insert_position">{{ entry_insert_position }}</label>
+                    <select class="dc-input" name="module_dc_omnibus_insert_position" id="module_dc_omnibus_insert_position">
+                      <option value="before"{% if module_dc_omnibus_insert_position == 'before' %} selected="selected"{% endif %}>{{ text_position_before }}</option>
+                      <option value="after"{% if module_dc_omnibus_insert_position == 'after' %} selected="selected"{% endif %}>{{ text_position_after }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="tab-languages" class="dc-tab-panel" role="tabpanel">
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-language"></i></span>
+                  <div><h3 class="dc-section-card__title">{{ text_section_languages }}</h3></div>
+                </div>
+                <div class="dc-lang-pills">
+                  {% for language in languages %}
+                  <button type="button" class="dc-lang-pill dc-tabs__btn{% if loop.first %} dc-active{% endif %}" data-dc-lang="lang-{{ language.language_id }}">{{ language.name }}</button>
+                  {% endfor %}
+                </div>
+                {% for language in languages %}
+                <div class="dc-lang-panel{% if loop.first %} dc-active{% endif %}" id="lang-{{ language.language_id }}">
+                  <div class="dc-field">
+                    <label class="dc-label" for="label-{{ language.language_id }}">{{ entry_label_text }}</label>
+                    <input class="dc-input" type="text" name="module_dc_omnibus_label[{{ language.language_id }}]" id="label-{{ language.language_id }}" value="{{ module_dc_omnibus_label[language.language_id]|default('') }}" placeholder="Najniższa cena z 30 dni" />
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div id="tab-files" class="dc-tab-panel" role="tabpanel">
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-file-text-o"></i></span>
+                  <div><h3 class="dc-section-card__title">{{ text_section_files }}</h3></div>
+                </div>
+                <div class="dc-field">
+                  <a href="{{ sync_url }}" class="dc-btn dc-btn--primary" id="dcOmnibusSyncBtn" data-confirm="{{ text_sync_confirm|e('html_attr') }}"><i class="fa fa-refresh"></i> {{ button_sync_promotions }}</a>
+                  <p class="dc-hint">{{ help_sync_promotions }}</p>
+                </div>
+                {% if cache_files %}
+                <div class="table-responsive">
+                  <table class="table table-bordered dc-omnibus-table">
+                    <thead>
+                      <tr>
+                        <th>{{ text_product_id }}</th>
+                        <th>{{ text_entries }}</th>
+                        <th>{{ text_modified }}</th>
+                        <th>{{ text_size }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for file in cache_files %}
+                      <tr>
+                        <td><a href="{{ file.history_href }}">{{ file.product_id }}</a></td>
+                        <td>{{ file.entries }}</td>
+                        <td>{{ file.modified }}</td>
+                        <td>{{ file.size }} B</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                <p class="dc-hint">{{ text_no_files }}</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <div id="tab-history" class="dc-tab-panel{% if history_product_id %} dc-active{% endif %}" role="tabpanel">
+              <div class="dc-section-card dc-section">
+                <div class="dc-section-card__head">
+                  <span class="dc-section-card__icon"><i class="fa fa-history"></i></span>
+                  <div>
+                    <h3 class="dc-section-card__title">{{ text_section_history }}{% if history_product_id %} — #{{ history_product_id }}{% endif %}</h3>
+                  </div>
+                </div>
+                {% if history_product_id and history_entries %}
+                <div class="table-responsive">
+                  <table class="table table-bordered dc-omnibus-table">
+                    <thead>
+                      <tr>
+                        <th>{{ column_date }}</th>
+                        <th>{{ column_price }}</th>
+                        <th>{{ column_currency }}</th>
+                        <th>{{ column_group }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for entry in history_entries|reverse %}
+                      <tr>
+                        <td>{{ entry.ts }}</td>
+                        <td>{{ entry.price }}</td>
+                        <td>{{ entry.currency }}</td>
+                        <td>{{ entry.group }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                <p class="dc-hint">{{ text_no_history }}</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="dc-actions">
+              <button type="submit" class="dc-btn dc-btn--primary"><i class="fa fa-save"></i> {{ button_save }}</button>
+              <a href="{{ cancel }}" class="dc-btn dc-btn--ghost">{{ button_cancel }}</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.dcOmnibusAdmin = {
+    historyProductId: {{ history_product_id }}
+  };
+</script>
+{{ footer }}

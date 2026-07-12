@@ -1,0 +1,167 @@
+#content.dc-omnibus-admin {
+  --dc-omnibus-font: 14px;
+  --dc-omnibus-font-sm: 14px;
+  --dc-omnibus-font-md: 15px;
+  --dc-omnibus-font-lg: 16px;
+
+  background:
+    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(31, 162, 140, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 95% 0%, rgba(28, 167, 202, 0.12), transparent 50%),
+    linear-gradient(180deg, #eef4f3 0%, #f1f5f9 100%);
+  min-height: calc(100vh - 100px);
+  padding-bottom: 4rem !important;
+  margin-left: -15px;
+  margin-right: -15px;
+  font-size: var(--dc-omnibus-font);
+}
+
+/* ─── Layout: alert nad kartą formularza ───────────────────── */
+.dc-omnibus-admin .dc-page__wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.dc-omnibus-admin .dc-page__wrap > .alert {
+  position: relative;
+  z-index: 5;
+  margin: 1.5rem 0 1.25rem;
+  padding: 1rem 1.15rem;
+  border: none;
+  border-radius: var(--dc-radius-sm, 12px);
+  font-size: var(--dc-omnibus-font);
+  font-weight: 600;
+  line-height: 1.45;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+
+.dc-omnibus-admin .dc-page__wrap > .alert-success {
+  background: linear-gradient(135deg, rgba(34, 160, 107, 0.12), rgba(34, 160, 107, 0.06));
+  color: #166534;
+}
+
+.dc-omnibus-admin .dc-page__wrap > .alert-danger {
+  background: linear-gradient(135deg, rgba(229, 72, 77, 0.12), rgba(229, 72, 77, 0.06));
+  color: #991b1b;
+}
+
+.dc-omnibus-admin .dc-page__wrap > .alert + .dc-form-card {
+  margin-top: 0.5rem;
+}
+
+.dc-omnibus-admin .dc-page__wrap > .dc-form-card:first-child {
+  margin-top: -2.75rem;
+}
+
+.dc-omnibus-admin .dc-form-card {
+  position: relative;
+  z-index: 2;
+}
+
+/* ─── Bazowa typografia (min. 14px) ────────────────────────── */
+.dc-omnibus-admin .dc-interface,
+.dc-omnibus-admin .dc-form-card .dc-interface,
+.dc-omnibus-admin .dc-form-card .dc-form {
+  font-size: var(--dc-omnibus-font);
+}
+
+.dc-omnibus-admin .dc-nav.dc-tabs .dc-nav__btn,
+.dc-omnibus-admin .dc-nav.dc-tabs .dc-tabs__btn {
+  font-size: var(--dc-omnibus-font-lg);
+}
+
+.dc-omnibus-admin .dc-lang-pills .dc-lang-pill,
+.dc-omnibus-admin .dc-lang-pills .dc-tabs__btn {
+  font-size: var(--dc-omnibus-font);
+}
+
+.dc-omnibus-admin .dc-section-card__title {
+  font-size: var(--dc-omnibus-font-lg);
+}
+
+.dc-omnibus-admin .dc-section-card__sub,
+.dc-omnibus-admin .dc-hint,
+.dc-omnibus-admin .dc-form-card .dc-label,
+.dc-omnibus-admin .dc-interface .dc-label,
+.dc-omnibus-admin .dc-interface .dc-hint,
+.dc-omnibus-admin .dc-check__text,
+.dc-omnibus-admin .dc-input,
+.dc-omnibus-admin .dc-select,
+.dc-omnibus-admin .dc-textarea,
+.dc-omnibus-admin .dc-btn,
+.dc-omnibus-admin .dc-hero__bc,
+.dc-omnibus-admin .dc-omnibus-table,
+.dc-omnibus-admin .dc-omnibus-table th,
+.dc-omnibus-admin .dc-omnibus-table td,
+.dc-omnibus-admin .dc-colorpicker__value,
+.dc-omnibus-admin .dc-colorpicker__label {
+  font-size: var(--dc-omnibus-font);
+}
+
+.dc-omnibus-admin .dc-form-card .dc-input,
+.dc-omnibus-admin .dc-form-card .dc-select,
+.dc-omnibus-admin .dc-form-card .dc-textarea {
+  font-size: var(--dc-omnibus-font);
+}
+
+.dc-omnibus-admin .dc-form-card .dc-btn--primary,
+.dc-omnibus-admin .dc-hero .dc-btn {
+  font-size: var(--dc-omnibus-font);
+}
+
+.dc-omnibus-admin .dc-hero__eyebrow {
+  font-size: var(--dc-omnibus-font);
+}
+
+.dc-omnibus-admin .dc-section-card__icon {
+  font-size: var(--dc-omnibus-font-lg);
+}
+
+/* ─── Podgląd panelu ───────────────────────────────────────── */
+.dc-omnibus-preview {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--dc-radius-sm);
+  border: 1px dashed var(--dc-border);
+}
+
+.dc-omnibus-preview__label {
+  color: var(--dc-muted);
+  font-size: var(--dc-omnibus-font);
+}
+
+.dc-omnibus-preview__price {
+  color: var(--dc-ink);
+  font-size: var(--dc-omnibus-font-md);
+  font-weight: 700;
+}
+
+.dc-omnibus-table a {
+  font-weight: 600;
+  color: var(--dc-brand);
+}
+
+.dc-omnibus-table a:hover {
+  text-decoration: underline;
+}
+
+.dc-omnibus-admin #dcOmnibusSyncBtn {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .dc-omnibus-admin .dc-page__wrap {
+    padding: 0 1rem;
+  }
+
+  .dc-omnibus-admin .dc-page__wrap > .alert {
+    margin: 1.15rem 0 1rem;
+  }
+
+  .dc-omnibus-admin .dc-page__wrap > .dc-form-card:first-child {
+    margin-top: -2rem;
+  }
+}
